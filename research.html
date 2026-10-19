@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research · Jiheng Li</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="page">
+  <header class="topbar">
+    <a class="back" href="index.html">← Back to the console</a>
+    <nav>
+      <a href="research.html" aria-current="page">Research</a>
+      <a href="photos.html">Photos</a>
+      <a href="about.html">About</a>
+      <a href="cv.pdf">CV</a>
+    </nav>
+  </header>
+
+  <div class="page-head">
+    <div class="kicker">Cartridge 01 · Research</div>
+    <h1>Research <em>log</em></h1>
+    <p>What I worked on in 2026. Each entry shows the short version; click "details" for what I actually built. Numbers are from my own runs.</p>
+  </div>
+
+  <div class="entries">
+
+    <article class="entry" style="--c:#3d4a7a">
+      <div class="spine">
+        <span class="when">07.2026 — now</span>
+        <span class="tag">GUI agents</span>
+        <span class="tag">Evaluation</span>
+      </div>
+      <div class="body">
+        <h2>Are multimodal skills necessary for GUI agents?</h2>
+        <div class="role">Independent research</div>
+        <p class="q">When a GUI agent gets better with "skills", how much of the gain is the skill, and how much is the prompt around it?</p>
+        <p class="sum">The no-skill baseline and the skill condition in OSWorld were not equivalent at the prompt level. After splitting the prompt into switchable modules, most of the reported gain came from scaffolding, not from skill knowledge.</p>
+        <div class="nums">
+          <div class="num"><b>≈58%</b><span>of the gain is prompt scaffolding</span></div>
+          <div class="num"><b>360</b><span>tasks in the ablation</span></div>
+          <div class="num"><b>4</b><span>scaffolds made switchable</span></div>
+        </div>
+        <details>
+          <summary>Details</summary>
+          <ul>
+            <li>Refactored four prompt scaffolds into independent switches and ran a 360-task ablation on OSWorld to separate scaffolding from skill knowledge.</li>
+            <li>Traced failures to concrete mechanisms: output-parse errors, premature self-termination, and the execution harness. A large share of tasks fail under every condition, which points at the agent–environment interface more than at visual perception.</li>
+            <li>Audited the text-only condition in code: it only injects SKILL.md, and some visual cues refer to a reference image instead of the runtime UI. So the original comparison cannot rule multimodal skills in or out.</li>
+            <li>Now: Skill Verbalization, which turns visual references into text under a five-type schema (each type ablatable), plus an offline discriminability check with hard negatives. The score is meant as a routing signal for when to call the multimodal path. Per-task flip rate is used to measure how stable a conclusion is.</li>
+            <li>Infrastructure: reproducible OSWorld pipeline on VMware Fusion with Qwen3-VL-8B behind an OpenAI-compatible API.</li>
+          </ul>
+        </details>
+        <div class="chips"><span>OSWorld</span><span>Qwen3-VL</span><span>Ablation design</span></div>
+      </div>
+    </article>
+
+    <article class="entry" style="--c:#2f6b6f">
+      <div class="spine">
+        <span class="when">07 — 08.2026</span>
+        <span class="tag">NC State · GEARS</span>
+        <span class="tag">Robotics</span>
+      </div>
+      <div class="body">
+        <h2>Task-specific visual perception for mobile robots</h2>
+        <div class="role">Summer research intern · North Carolina State University</div>
+        <p class="sum">Adapted the open-source YOLOv8n to detect people, Unitree Go2 quadrupeds and Scout robots on indoor and outdoor ZED RGB footage, then ran it on a Jetson against live ROS2 streams. The goal was a detector that holds up across scenes, not a new architecture.</p>
+        <div class="nums">
+          <div class="num"><b>25.22 → 19.53 ms</b><span>mean latency vs YOLO11n (−22.6%)</span></div>
+          <div class="num"><b>30.4 → 36.3</b><span>FPS on Jetson</span></div>
+          <div class="num"><b>≈90%</b><span>frontal human detection at 6 m</span></div>
+        </div>
+        <details>
+          <summary>Details</summary>
+          <ul>
+            <li>End-to-end pipeline: video collection, annotation, training, evaluation, Jetson inference. Live ROS2 topics bridged through rosbridge inside Docker.</li>
+            <li>From the failure cases came a follow-up question: when a target walks from a well-lit region into a bad one, can the detection history from the good region, plus LiDAR cues, keep the track alive?</li>
+          </ul>
+        </details>
+        <div class="chips"><span>YOLOv8n</span><span>ROS2</span><span>Jetson</span><span>Docker</span><span>LiDAR</span></div>
+      </div>
+    </article>
+
+    <article class="entry" style="--c:#c4573a">
+      <div class="spine">
+        <span class="when">03 — 07.2026</span>
+        <span class="tag">World models</span>
+        <span class="tag">Inverse dynamics</span>
+      </div>
+      <div class="body">
+        <h2>DynamiX and action-controllable world models from gameplay video</h2>
+        <div class="role">Research intern · data engine owner</div>
+        <p class="q">Can diverse, pseudo-labeled gameplay teach a video model what an action does to the world, rather than what it looks like?</p>
+        <p class="sum">DynamiX infers the controls behind a gameplay video across many games. I built GameMotion-A, the data engine that turns raw YouTube gameplay into training clips for it. The follow-up uses DynamiX's pseudo-labels to train an action-conditioned video model and tests whether actions have consistent consequences: undo an action and see if the world comes back, look away and look back.</p>
+        <div class="nums">
+          <div class="num"><b>≈5,800 h</b><span>YouTube gameplay processed</span></div>
+          <div class="num"><b>Qwen3-VL-30B-A3B</b><span>multi-stage clip filter</span></div>
+          <div class="num"><b>CogVideoX-2B</b><span>video backbone</span></div>
+        </div>
+        <details>
+          <summary>Details</summary>
+          <ul>
+            <li>Data engine: frame-level automated quality checks, and a multi-stage feedback-and-filter pipeline on Qwen3-VL with explicit rules for viewpoint, streamer facecam, danmaku comments, scene transitions and UI/HUD.</li>
+            <li>Labeling pipeline: center crop, resample to 15 FPS, cut detection, UI removal with GameCleaner, pseudo-labels from DynamiX. Frame alignment uses a 12-frame window with stride 8, keeping the middle 8 frames; the full action distribution is kept so training can weight by confidence.</li>
+            <li>Model: CogVideoX-2B image-to-video, actions injected through AdaLN. Actions are pooled per type (sum for camera yaw/pitch, mean for held keys, max for presses) to match the 3D VAE's 4× temporal compression. History frames are noised during training so long autoregressive rollouts do not drift.</li>
+            <li>Evaluation: closed-loop reversibility, occlusion-and-reveal consistency, compositional action generalization, zero-shot transfer to unseen games. Geometry is scored with RAFT optical flow, so the model is not judged by the same IDM that labeled its data.</li>
+          </ul>
+        </details>
+        <div class="chips"><span>Qwen3-VL</span><span>InternVL</span><span>FFmpeg</span><span>CogVideoX</span><span>3D VAE</span><span>RAFT</span><span>PyTorch</span></div>
+      </div>
+    </article>
+
+    <article class="entry" style="--c:#5b4a6d">
+      <div class="spine">
+        <span class="when">01 — 07.2026</span>
+        <span class="tag">HUST</span>
+        <span class="tag">LLM for code</span>
+      </div>
+      <div class="body">
+        <h2>Detecting and reducing hallucination in LLM code summaries</h2>
+        <div class="role">Undergraduate research project · Huazhong University of Science and Technology</div>
+        <p class="sum">A benchmark, a detector and a decoding strategy for summaries that describe code the function does not contain.</p>
+        <div class="nums">
+          <div class="num"><b>17% → 97%</b><span>trigger rate with AST predicate negation</span></div>
+          <div class="num"><b>F1 0.95</b><span>detector on Qwen2.5-Coder-7B</span></div>
+          <div class="num"><b>66% → 59%</b><span>hallucination rate, DeepSeek-Coder-6.7B</span></div>
+        </div>
+        <details>
+          <summary>Details</summary>
+          <ul>
+            <li>Hallu-Eval: 800 human-annotated code–summary pairs. Adversarial tests negate AST predicates to stress the model.</li>
+            <li>Hallu-Det: two-stage rule-augmented evaluator (entity checks, then synonym-mutation refinement). Beats SelfCheckGPT.</li>
+            <li>Hallu-Shield: MDP-style decoding where a trained value model scores candidates at inference time; 71.5% win rate in human evaluation.</li>
+          </ul>
+        </details>
+      </div>
+    </article>
+
+    <article class="entry" style="--c:#8a8174">
+      <div class="spine">
+        <span class="when">10.2026 — now</span>
+        <span class="tag">AI security</span>
+        <span class="tag">Just started</span>
+      </div>
+      <div class="body">
+        <h2>Faithfulness of reasoning traces in LLM vulnerability detection</h2>
+        <div class="role">Lab project · AI for security</div>
+        <p class="sum">When an LLM flags a vulnerability and explains why, does the explanation reflect what actually drove the answer? I joined this project in October and am currently getting up to speed on the codebase.</p>
+      </div>
+    </article>
+
+  </div>
+</div>
+</body>
+</html>
