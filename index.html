@@ -4,475 +4,352 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jiheng Li</title>
-<meta name="description" content="Jiheng Li (李继亨) — undergraduate at HUST working on world models from gameplay video, GUI agent evaluation and robot perception.">
+<meta name="description" content="Jiheng Li (李继亨) — undergraduate at HUST working on multimodal models, world models from gameplay video, GUI agents and robot perception.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=VT323&family=Caveat:wght@500&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500&text=李继亨&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@500&text=李继亨&display=swap" rel="stylesheet">
 <style>
-  body { overflow-x: hidden; }
+  :root {
+    --bg: #e8e5df;
+    --surface: #f3f1ec;
+    --ink: #3d3a37;
+    --ink-2: #5b5751;
+    --muted: #8d8881;
+    --line: rgba(61, 58, 55, .12);
+    --grid: rgba(61, 58, 55, .05);
+    --sage: #8a9a86;
+    --rose: #b9958d;
+    --blue: #8b9bab;
+    --sand: #c4b498;
+    --mauve: #9f8f9a;
+    --sans: 'Manrope', -apple-system, 'PingFang SC', sans-serif;
+    --mono: 'DM Mono', ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
 
-  .home {
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: minmax(300px, 400px) minmax(0, 1fr);
-    align-items: center;
-    gap: 24px;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 24px 48px;
+  /* ---------- nav ---------- */
+  .nav { position: sticky; top: 0; z-index: 10; padding: 12px 0; }
+  .nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .nav .brand, .nav nav, .nav .mail {
+    background: rgba(243, 241, 236, .78); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--line); border-radius: 999px;
   }
+  .nav .brand { font-family: var(--mono); font-size: .85rem; text-decoration: none; padding: 8px 16px; }
+  .nav nav { display: flex; gap: 4px; padding: 4px; }
+  .nav nav a { font-size: .84rem; font-weight: 600; color: var(--ink-2); text-decoration: none; padding: 6px 14px; border-radius: 999px; transition: background .2s; }
+  .nav nav a:hover { background: var(--bg); color: var(--ink); }
+  .nav .mail { font-family: var(--mono); font-size: .76rem; padding: 8px 16px; text-decoration: none; }
+  .nav .mail:hover { background: var(--ink); color: var(--surface); }
 
-  .hello {
-    font-family: 'Caveat', cursive; font-size: 1.85rem; line-height: 1;
-    color: var(--terracotta);
-    transform: rotate(-3deg); transform-origin: left center;
-    margin-bottom: 14px;
-    display: inline-flex; align-items: center; gap: 8px;
+  /* ---------- hero ---------- */
+  .hero { position: relative; min-height: calc(100vh - 66px); display: flex; align-items: center; padding: 40px 0 72px; overflow: hidden; }
+  .hero::before {
+    content: ''; position: absolute; inset: 16px 32px; border-radius: 32px;
+    background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 56px 56px; background-position: center;
+    border: 1px solid var(--line);
+    pointer-events: none;
   }
-  .hello svg { width: 46px; height: 22px; }
-  .intro h1 {
-    font-family: var(--serif);
-    font-weight: 400;
-    font-size: clamp(3.2rem, 5.4vw, 5rem);
-    line-height: .95;
-    letter-spacing: -1px;
-  }
-  .intro h1 em { font-style: italic; }
-  .who { margin: 20px 0 12px; }
-  .who .cn { font-family: 'Noto Serif SC', serif; letter-spacing: 2px; font-size: .95rem; }
-  .intro p.lede { font-size: 1rem; line-height: 1.65; color: var(--ink-2); max-width: 38ch; }
-  .intro p.lede + p.lede { margin-top: 12px; }
-  .open-to {
-    display: inline-flex; align-items: center; gap: 8px;
-    margin-top: 20px;
-    font-family: var(--mono); font-size: .74rem; letter-spacing: .4px;
-    background: #fff; border: 1px solid var(--line);
-    padding: 7px 12px; border-radius: 999px;
-  }
-  .open-to i { width: 7px; height: 7px; border-radius: 50%; background: #4f9a5b; box-shadow: 0 0 0 3px rgba(79,154,91,.18); }
-  .links { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 18px; }
-  .links a {
-    font-family: var(--mono); font-size: .8rem; color: var(--ink);
-    text-decoration: none; border-bottom: 1px solid var(--ink);
-    padding-bottom: 1px;
-  }
-  .links a:hover { color: var(--terracotta); border-color: var(--terracotta); }
-  .hint { margin-top: 26px; font-family: var(--mono); font-size: .72rem; color: var(--muted); letter-spacing: .6px; text-transform: uppercase; }
-  .hint kbd {
-    font-family: var(--mono); font-size: .7rem;
-    border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px;
-    padding: 0 5px; background: #fff;
-  }
+  .hero .wrap { position: relative; width: 100%; text-align: center; }
+  .hello { font-family: var(--mono); font-size: .92rem; color: var(--rose); letter-spacing: .4px; margin-bottom: 6px; }
+  #dots { display: block; width: 100%; margin: 0 auto; touch-action: pan-y; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-  @media (max-height: 820px) { .hint { display: none; } }
-
-  /* ---------- the scene ---------- */
-  .scene { width: 100%; max-height: 92vh; display: block; overflow: visible; }
-  .scene text { user-select: none; }
-  .obj { filter: url(#shadow); }
-
-  .cart { cursor: pointer; outline: none; }
-  .cart .lift {
-    transform-box: fill-box; transform-origin: center;
-    transition: transform .35s cubic-bezier(.34,1.56,.64,1), filter .35s;
-  }
-  .snap { cursor: pointer; outline: none; }
-  .snap .lift {
-    transform-box: fill-box; transform-origin: center;
-    transition: transform .35s cubic-bezier(.34,1.56,.64,1), filter .35s;
-  }
-  .snap:focus-visible .frame { stroke: var(--ink); stroke-width: 2.5; }
-  .snap:hover .lift, .snap:focus-visible .lift,
-  .cart:hover .lift, .cart:focus-visible .lift, .cart.active .lift {
-    transform: translateY(-14px) scale(1.06);
-    filter: url(#shadow-hi);
-  }
-  .cart:focus-visible .label-bg { stroke: var(--ink); stroke-width: 2.5; }
-  .cart.inserting .lift { transition: transform .45s ease-in; }
-
-  .dpad, .btn { cursor: pointer; }
-  .btn:active, .dpad rect:active { opacity: .75; }
-
-  #screen-info { display: none; }
-  .screen-on #screen-idle { display: none; }
-  .screen-on #screen-info { display: inline; }
-  .blink { animation: blink 1.1s steps(2, start) infinite; }
+  .lede { max-width: 640px; margin: 16px auto 0; font-size: 1.1rem; line-height: 1.7; color: var(--ink-2); font-weight: 500; }
+  .lede .cn { font-family: 'Noto Sans SC', sans-serif; font-size: 1rem; letter-spacing: 2px; }
+  .cursor { display: inline-block; width: 2px; height: 1.1em; border-radius: 2px; background: var(--ink); vertical-align: -3px; margin-left: 3px; animation: blink 1.05s steps(2, start) infinite; }
   @keyframes blink { to { visibility: hidden; } }
 
-  /* ---------- mobile ---------- */
-  .mobile-list { display: none; }
+  .chip {
+    position: absolute; font-family: var(--mono); font-size: .7rem; letter-spacing: .4px; color: var(--ink-2);
+    border: 1px solid var(--line); background: var(--surface); padding: 5px 12px; border-radius: 999px; white-space: nowrap;
+  }
+  .chip i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--sage); margin-right: 7px; vertical-align: 0; box-shadow: 0 0 0 3px rgba(138,154,134,.22); }
+  .chip.a { top: -6px; left: 4%; }
+  .chip.b { top: 6px; right: 6%; }
+  .chip.c { bottom: 120px; left: 0; }
+  .chip.d { bottom: 140px; right: 2%; }
+  .chip.plain { border-color: transparent; background: none; color: var(--muted); }
+
+  .scroll-cue {
+    display: inline-flex; flex-direction: column; align-items: center; gap: 6px; margin-top: 40px;
+    font-family: var(--mono); font-size: .74rem; color: var(--muted); text-decoration: none;
+  }
+  .scroll-cue span { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 6px 14px; color: var(--ink-2); transition: background .2s; }
+  .scroll-cue:hover span { background: var(--ink); color: var(--surface); }
+
+  /* ---------- index ---------- */
+  .index { padding: 32px 0 96px; }
+  .index .kicker { font-family: var(--mono); font-size: .74rem; letter-spacing: 1.4px; color: var(--muted); margin: 0 0 16px 8px; }
+  .rows { display: grid; gap: 12px; }
+  .row {
+    display: grid; grid-template-columns: 72px minmax(0, 1fr) 48px; align-items: center;
+    padding: 30px 28px; border-radius: 28px; text-decoration: none;
+    background: rgba(243, 241, 236, .55); border: 1px solid var(--line);
+    transition: background .3s, transform .3s, border-color .3s;
+  }
+  .row .no {
+    width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
+    font-family: var(--mono); font-size: .78rem; color: var(--ink-2); background: var(--bg); transition: background .3s, color .3s;
+  }
+  .row h2 { font-size: clamp(2rem, 4.2vw, 3.2rem); font-weight: 800; letter-spacing: -1.4px; line-height: 1.05; }
+  .row p { margin-top: 6px; font-size: .95rem; color: var(--muted); font-weight: 500; }
+  .row .arrow {
+    justify-self: end; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center;
+    font-size: 1.2rem; color: var(--surface); background: var(--c); opacity: 0; transform: scale(.7); transition: opacity .3s, transform .3s;
+  }
+  .row:hover, .row:focus-visible { background: var(--surface); border-color: transparent; transform: translateY(-2px); outline: none; }
+  .row:hover .no, .row:focus-visible .no { background: var(--c); color: var(--surface); }
+  .row:hover .arrow, .row:focus-visible .arrow { opacity: 1; transform: none; }
+
+  /* ---------- connect ---------- */
+  .connect { padding: 0 0 56px; }
+  .panel {
+    border-radius: 36px; padding: 64px 56px; background: var(--surface); border: 1px solid var(--line);
+    display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) 220px; gap: 48px; align-items: start;
+  }
+  .connect h2 { font-size: clamp(3rem, 6.6vw, 5.2rem); font-weight: 800; letter-spacing: -3px; line-height: .95; }
+  .connect h2 b { color: var(--rose); }
+  .connect .say { margin-top: 20px; color: var(--ink-2); line-height: 1.7; max-width: 40ch; font-weight: 500; }
+  .channels .kicker { font-family: var(--mono); font-size: .7rem; letter-spacing: 1.2px; color: var(--muted); margin-bottom: 12px; }
+  .channels .kicker i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--rose); margin-right: 8px; vertical-align: 0; }
+  .channels a {
+    display: grid; grid-template-columns: 74px 1fr; gap: 10px; align-items: center;
+    padding: 13px 16px; margin-bottom: 8px; border-radius: 16px; background: var(--bg);
+    text-decoration: none; font-size: .92rem; transition: background .2s, color .2s;
+  }
+  .channels a span { font-family: var(--mono); font-size: .7rem; color: var(--muted); }
+  .channels a:hover { background: var(--ink); color: var(--surface); }
+  .channels b { font-weight: 600; word-break: break-all; }
+  .me { margin: 0; }
+  .me img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; display: block; border-radius: 22px; }
+  .me figcaption { font-family: var(--mono); font-size: .7rem; color: var(--muted); padding: 10px 4px 0; letter-spacing: .4px; }
+
+  footer { padding: 0 0 40px; font-family: var(--mono); font-size: .72rem; color: var(--muted); }
+  footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 0 48px; }
+
   @media (max-width: 900px) {
-    .home { grid-template-columns: 1fr; padding: 28px 16px 40px; gap: 8px; min-height: 0; }
-    .intro h1 { font-size: 3.4rem; }
-    .hint { display: none; }
-    .open-to { border-radius: 10px; align-items: flex-start; }
-    .open-to i { margin-top: 5px; flex: none; }
-    .scene { max-height: none; margin: 0 -8px; width: calc(100% + 16px); }
-    .mobile-list { display: grid; gap: 12px; }
-    .mobile-list a {
-      display: flex; align-items: center; gap: 14px;
-      background: #fff; border: 1px solid var(--line); border-radius: 10px;
-      padding: 14px 16px; text-decoration: none; color: var(--ink);
-    }
-    .mobile-list .sw { width: 10px; align-self: stretch; border-radius: 3px; }
-    .mobile-list b { font-family: var(--serif); font-weight: 400; font-size: 1.35rem; display: block; }
-    .mobile-list span { font-size: .82rem; color: var(--muted); }
+    .wrap { padding: 0 16px; }
+    .nav nav { display: none; }
+    .hero { min-height: 0; padding: 36px 0 56px; }
+    .hero::before { inset: 8px 8px; border-radius: 24px; }
+    .chip { display: none; }
+    .lede { font-size: 1rem; padding: 0 6px; }
+    .row { grid-template-columns: 52px minmax(0, 1fr) 36px; padding: 22px 16px; border-radius: 22px; }
+    .row .arrow { width: 34px; height: 34px; }
+    .panel { grid-template-columns: 1fr; gap: 32px; padding: 40px 22px; border-radius: 28px; }
+    .me { max-width: 240px; }
+    footer .wrap { padding: 0 20px; }
   }
 </style>
 </head>
 <body>
 
-<main class="home">
-  <section class="intro">
-    <div class="hello">hi there, welcome to
-      <svg viewBox="0 0 46 22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M2 6 C 14 2, 26 4, 32 12 S 40 20, 44 16"/><path d="M37 19 L44 16 L41 9"/></svg>
-    </div>
-    <h1>Jiheng's<br><em>world.</em></h1>
-    <p class="lede who">I'm Jiheng Li <span class="cn">李继亨</span>, a third-year undergrad in Intelligence Science &amp; Technology at HUST (Huazhong University of Science and Technology).</p>
-    <p class="lede">I'm interested in multimodal models that have to act on what they see: video models that learn what an action does from gameplay footage, and robots that keep track of people when the view gets bad.</p>
-    <p class="lede">Lately I keep coming back to one question about GUI agents: when does an agent really need to see the screen, and when is a text description enough?</p>
-    <div class="open-to"><i></i>Open to research internships &amp; RA positions</div>
-    <div class="links">
-      <a href="mailto:ljh20050406@163.com">Email</a>
-      <a href="cv.pdf">CV (PDF)</a>
-      <a href="https://github.com/lijiheng972-hub">GitHub</a>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html">jiheng.li</a>
+    <nav>
       <a href="research.html">Research</a>
+      <a href="photos.html">Photos</a>
+      <a href="about.html">About</a>
+      <a href="cv.pdf">CV</a>
+    </nav>
+    <a class="mail" href="mailto:ljh20050406@163.com">email me</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+        <div class="wrap">
+      <span class="chip a"><i></i>OPEN TO RA &amp; INTERNSHIPS</span>
+      <span class="chip b">[HUST · CLASS OF 2028]</span>
+      <span class="chip plain c">&gt; multimodal_agents</span>
+      <span class="chip plain d">world_models_</span>
+
+      <div class="hello">hi there, welcome to</div>
+      <h1 class="sr">Jiheng's world</h1>
+      <canvas id="dots" aria-hidden="true"></canvas>
+
+      <p class="lede">I'm Jiheng Li <span class="cn">李继亨</span>, a third-year undergrad in Intelligence Science &amp; Technology at HUST. I'm interested in multimodal models that have to act on what they see, and lately in when a GUI agent really needs to see the screen.<span class="cursor"></span></p>
+
+      <a class="scroll-cue" href="#index"><span>&gt; scroll_down()</span>↓</a>
     </div>
-    <div class="hint">→ Pick a cartridge. Or use <kbd>←</kbd> <kbd>→</kbd> and <kbd>Enter</kbd>.</div>
   </section>
 
-  <svg class="scene" viewBox="-225 0 1225 720" role="group" aria-label="A photo of Jiheng next to a handheld console surrounded by four cartridges: Research, Photos, About, CV">
-    <defs>
-      <filter id="shadow" x="-30%" y="-30%" width="160%" height="170%">
-        <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#3a2f22" flood-opacity=".16"/>
-      </filter>
-      <filter id="shadow-hi" x="-30%" y="-30%" width="160%" height="180%">
-        <feDropShadow dx="0" dy="26" stdDeviation="18" flood-color="#3a2f22" flood-opacity=".28"/>
-      </filter>
-      <clipPath id="screen-clip"><rect x="-95" y="-185" width="190" height="155"/></clipPath>
-      <pattern id="dots" width="4" height="4" patternUnits="userSpaceOnUse">
-        <circle cx="1" cy="1" r=".6" fill="#2f3b23" opacity=".08"/>
-      </pattern>
-      <!-- one cartridge shell, labels drawn on top per instance -->
-      <g id="shell">
-        <path d="M-85 -92 Q-85 -98 -79 -98 L58 -98 L85 -71 L85 92 Q85 98 79 98 L-79 98 Q-85 98 -85 92 Z" fill="#bfb8ab" stroke="#a69e90" stroke-width="1.5"/>
-        <g stroke="#a69e90" stroke-width="2" stroke-linecap="round">
-          <line x1="-66" y1="-88" x2="40" y2="-88"/><line x1="-66" y1="-82" x2="40" y2="-82"/><line x1="-66" y1="-76" x2="40" y2="-76"/>
-        </g>
-        <path d="M-6 82 L6 82 L0 90 Z" fill="#a69e90"/>
-      </g>
-    </defs>
+  <section class="index" id="index">
+    <div class="wrap">
+      <div class="kicker">INDEX</div>
+      <div class="rows">
+        <a class="row" href="research.html" style="--c:var(--blue)"><span class="no">01</span><div><h2>Research</h2><p>World models from gameplay video, GUI agents, robot perception</p></div><span class="arrow">→</span></a>
+        <a class="row" href="photos.html" style="--c:var(--sage)"><span class="no">02</span><div><h2>Photos</h2><p>Portraits I shot, off the clock</p></div><span class="arrow">→</span></a>
+        <a class="row" href="about.html" style="--c:var(--rose)"><span class="no">03</span><div><h2>About</h2><p>Who I am, courses, debate</p></div><span class="arrow">→</span></a>
+        <a class="row" href="cv.pdf" style="--c:var(--mauve)"><span class="no">04</span><div><h2>CV</h2><p>2 pages, PDF</p></div><span class="arrow">→</span></a>
+      </div>
+    </div>
+  </section>
 
-    <!-- ===== decor: label tape above the console ===== -->
-    <g class="obj" transform="translate(500 62) rotate(-2)">
-      <rect x="-150" y="-24" width="300" height="48" fill="#fbf7ee" stroke="#e4dccb"/>
-      <rect x="-166" y="-12" width="34" height="24" fill="#e9dcc0" opacity=".85" transform="rotate(-8 -149 0)"/>
-      <rect x="132" y="-12" width="34" height="24" fill="#e9dcc0" opacity=".85" transform="rotate(10 149 0)"/>
-      <text x="0" y="8" text-anchor="middle" font-family="Caveat" font-size="25" fill="#3b342c">now asking: when is text enough?</text>
-    </g>
-
-    <!-- ===== decor: film strip below the console ===== -->
-    <g class="obj" transform="translate(500 668) rotate(-3)">
-      <rect x="-160" y="-30" width="320" height="60" rx="3" fill="#2a2724"/>
-      <g fill="#f1ece2" opacity=".8">
-        <rect x="-152" y="-25" width="7" height="5" rx="1"/><rect x="-132" y="-25" width="7" height="5" rx="1"/><rect x="-112" y="-25" width="7" height="5" rx="1"/><rect x="-92" y="-25" width="7" height="5" rx="1"/><rect x="-72" y="-25" width="7" height="5" rx="1"/><rect x="-52" y="-25" width="7" height="5" rx="1"/><rect x="-32" y="-25" width="7" height="5" rx="1"/><rect x="-12" y="-25" width="7" height="5" rx="1"/><rect x="8" y="-25" width="7" height="5" rx="1"/><rect x="28" y="-25" width="7" height="5" rx="1"/><rect x="48" y="-25" width="7" height="5" rx="1"/><rect x="68" y="-25" width="7" height="5" rx="1"/><rect x="88" y="-25" width="7" height="5" rx="1"/><rect x="108" y="-25" width="7" height="5" rx="1"/><rect x="128" y="-25" width="7" height="5" rx="1"/><rect x="148" y="-25" width="7" height="5" rx="1"/>
-        <rect x="-152" y="20" width="7" height="5" rx="1"/><rect x="-132" y="20" width="7" height="5" rx="1"/><rect x="-112" y="20" width="7" height="5" rx="1"/><rect x="-92" y="20" width="7" height="5" rx="1"/><rect x="-72" y="20" width="7" height="5" rx="1"/><rect x="-52" y="20" width="7" height="5" rx="1"/><rect x="-32" y="20" width="7" height="5" rx="1"/><rect x="-12" y="20" width="7" height="5" rx="1"/><rect x="8" y="20" width="7" height="5" rx="1"/><rect x="28" y="20" width="7" height="5" rx="1"/><rect x="48" y="20" width="7" height="5" rx="1"/><rect x="68" y="20" width="7" height="5" rx="1"/><rect x="88" y="20" width="7" height="5" rx="1"/><rect x="108" y="20" width="7" height="5" rx="1"/><rect x="128" y="20" width="7" height="5" rx="1"/><rect x="148" y="20" width="7" height="5" rx="1"/>
-      </g>
-      <!-- five frames: a block drifting right, i.e. the consequence of pressing → -->
-      <g>
-        <rect x="-150" y="-16" width="56" height="32" fill="#c9d1b3"/><rect x="-86" y="-16" width="56" height="32" fill="#c9d1b3"/><rect x="-22" y="-16" width="56" height="32" fill="#c9d1b3"/><rect x="42" y="-16" width="56" height="32" fill="#c9d1b3"/><rect x="106" y="-16" width="44" height="32" fill="#c9d1b3"/>
-        <g fill="#2f3b23"><rect x="-140" y="0" width="10" height="10"/><rect x="-68" y="0" width="10" height="10"/><rect x="2" y="0" width="10" height="10"/><rect x="72" y="0" width="10" height="10"/><rect x="138" y="0" width="10" height="10"/></g>
-        <g stroke="#2f3b23" stroke-width="1" opacity=".5"><line x1="-150" y1="10" x2="-94" y2="10"/><line x1="-86" y1="10" x2="-30" y2="10"/><line x1="-22" y1="10" x2="34" y2="10"/><line x1="42" y1="10" x2="98" y2="10"/><line x1="106" y1="10" x2="150" y2="10"/></g>
-      </g>
-    </g>
-    <text x="680" y="700" font-family="Caveat" font-size="21" fill="#7a7064" transform="rotate(-3 680 700)">x<tspan dy="5" font-size="14">t+1</tspan><tspan dy="-5"> = f(x</tspan><tspan dy="5" font-size="14">t</tspan><tspan dy="-5">, a</tspan><tspan dy="5" font-size="14">t</tspan><tspan dy="-5">)</tspan></text>
-
-    <!-- ===== decor: stars ===== -->
-    <g fill="#e2b13c" class="obj">
-      <path transform="translate(330 92) scale(.9) rotate(12)" d="M0 -16 L4.7 -5 L16 -4.9 L7.4 2.6 L10 14 L0 8 L-10 14 L-7.4 2.6 L-16 -4.9 L-4.7 -5 Z"/>
-      <path transform="translate(905 640) scale(.7) rotate(-10)" d="M0 -16 L4.7 -5 L16 -4.9 L7.4 2.6 L10 14 L0 8 L-10 14 L-7.4 2.6 L-16 -4.9 L-4.7 -5 Z"/>
-      <path transform="translate(70 650) scale(.55)" d="M0 -16 L4.7 -5 L16 -4.9 L7.4 2.6 L10 14 L0 8 L-10 14 L-7.4 2.6 L-16 -4.9 L-4.7 -5 Z"/>
-    </g>
-
-    <!-- ===== the console ===== -->
-    <g class="obj" transform="translate(500 372) rotate(-3)">
-      <path d="M-150 -215 Q-150 -235 -130 -235 L130 -235 Q150 -235 150 -215 L150 150 Q150 235 65 235 L-130 235 Q-150 235 -150 215 Z" fill="#e8e2d6" stroke="#cbc2b2" stroke-width="1.5"/>
-      <line x1="-150" y1="-214" x2="150" y2="-214" stroke="#d2c9b9" stroke-width="1.5"/>
-      <line x1="-128" y1="-214" x2="-128" y2="-235" stroke="#d2c9b9" stroke-width="1.5"/>
-      <line x1="128" y1="-214" x2="128" y2="-235" stroke="#d2c9b9" stroke-width="1.5"/>
-      <text x="-100" y="-221" font-family="JetBrains Mono" font-size="7" fill="#a59c8c" letter-spacing="1">◁ OFF·ON ▷</text>
-
-      <!-- bezel -->
-      <path d="M-125 -190 Q-125 -200 -115 -200 L115 -200 Q125 -200 125 -190 L125 -46 Q125 -10 89 -10 L-115 -10 Q-125 -10 -125 -20 Z" fill="#585b69"/>
-      <line x1="-112" y1="-193" x2="10" y2="-193" stroke="#8c3f5c" stroke-width="1.2"/>
-      <line x1="-112" y1="-190" x2="10" y2="-190" stroke="#3f5b8c" stroke-width="1.2"/>
-      <text x="16" y="-189" font-family="JetBrains Mono" font-size="6.5" fill="#c4c6cf" letter-spacing=".6">ACTION MATRIX</text>
-      <circle cx="-112" cy="-118" r="4" fill="#e0533f"><animate attributeName="opacity" values="1;.55;1" dur="2.4s" repeatCount="indefinite"/></circle>
-      <text x="-118" y="-102" font-family="JetBrains Mono" font-size="5.5" fill="#c4c6cf">POWER</text>
-
-      <!-- screen -->
-      <rect x="-95" y="-185" width="190" height="155" fill="#b4c095"/>
-      <g clip-path="url(#screen-clip)" id="screen" font-family="VT323" fill="#2f3b23">
-        <rect x="-95" y="-185" width="190" height="155" fill="url(#dots)"/>
-        <g id="screen-idle">
-          <text x="-84" y="-163" font-size="15">JIHENG.EXE</text>
-          <text x="84" y="-163" font-size="13" text-anchor="end" id="frame-no">t=0000</text>
-          <text x="-84" y="-144" font-size="13" opacity=".8">a tiny world model.</text>
-          <text x="-84" y="-131" font-size="13" opacity=".8">press ◀ ▶ or A.</text>
-          <line x1="-95" y1="-62" x2="95" y2="-62" stroke="#2f3b23" stroke-width="1.5" stroke-dasharray="4 3"/>
-          <g id="dog"></g>
-          <text x="-84" y="-40" font-size="13" class="blink">▶ PICK A CARTRIDGE</text>
-          <text x="84" y="-40" font-size="13" text-anchor="end" id="action-readout">a=▶</text>
-        </g>
-        <g id="screen-info">
-          <rect x="-95" y="-185" width="190" height="22" fill="#2f3b23"/>
-          <text x="-84" y="-169" font-size="15" fill="#b4c095" id="info-title">RESEARCH</text>
-          <text x="84" y="-169" font-size="13" fill="#b4c095" text-anchor="end" id="info-count"></text>
-          <text x="-84" y="-144" font-size="14" id="info-1"></text>
-          <text x="-84" y="-129" font-size="14" id="info-2"></text>
-          <text x="-84" y="-114" font-size="14" id="info-3"></text>
-          <text x="-84" y="-99" font-size="14" id="info-4"></text>
-          <text x="-84" y="-40" font-size="13" class="blink" id="info-cta">PRESS A TO LOAD</text>
-        </g>
-      </g>
-
-      <text x="-125" y="22" font-family="Instrument Serif" font-style="italic" font-size="22" fill="#3d4a7a">JL·Boy</text>
-      <text x="-50" y="21" font-family="JetBrains Mono" font-size="7.5" fill="#9a9182" letter-spacing="1">WORLD-MODEL EDITION</text>
-
-      <!-- d-pad -->
-      <g class="dpad" transform="translate(-78 92)">
-        <rect x="-14" y="-44" width="28" height="88" rx="4" fill="#2b2b30" data-act="up"/>
-        <rect x="-44" y="-14" width="88" height="28" rx="4" fill="#2b2b30"/>
-        <rect x="-44" y="-14" width="30" height="28" rx="4" fill="#2b2b30" data-act="left"/>
-        <rect x="14" y="-14" width="30" height="28" rx="4" fill="#2b2b30" data-act="right"/>
-        <circle r="7" fill="#38383e"/>
-        <path d="M-36 0 L-28 -5 L-28 5 Z M36 0 L28 -5 L28 5 Z" fill="#4a4a52" pointer-events="none"/>
-      </g>
-
-      <!-- A / B -->
-      <g transform="rotate(-25 70 85)">
-        <circle class="btn" cx="40" cy="85" r="20" fill="#9a2f55" data-act="b"/>
-        <circle class="btn" cx="100" cy="85" r="20" fill="#9a2f55" data-act="a"/>
-        <text x="40" y="122" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#3d4a7a" font-weight="500">B</text>
-        <text x="100" y="122" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#3d4a7a" font-weight="500">A</text>
-      </g>
-
-      <!-- select / start -->
-      <g transform="rotate(-25 0 172)">
-        <rect x="-50" y="166" width="38" height="11" rx="5.5" fill="#9b9588"/>
-        <rect x="6" y="166" width="38" height="11" rx="5.5" fill="#9b9588"/>
-        <text x="-31" y="190" text-anchor="middle" font-family="JetBrains Mono" font-size="6.5" fill="#3d4a7a" letter-spacing=".8">SELECT</text>
-        <text x="25" y="190" text-anchor="middle" font-family="JetBrains Mono" font-size="6.5" fill="#3d4a7a" letter-spacing=".8">START</text>
-      </g>
-
-      <!-- speaker -->
-      <g transform="translate(96 176) rotate(-30)" stroke="#bdb4a3" stroke-width="5" stroke-linecap="round">
-        <line x1="-20" y1="-24" x2="-20" y2="24"/><line x1="-8" y1="-24" x2="-8" y2="24"/><line x1="4" y1="-24" x2="4" y2="24"/><line x1="16" y1="-24" x2="16" y2="24"/><line x1="28" y1="-24" x2="28" y2="24"/>
-      </g>
-    </g>
-
-    <!-- ===== a photo of me, taped down; opens About ===== -->
-    <a class="snap" href="about.html" transform="translate(-96 372) rotate(-5) scale(1.12)" aria-label="Photo of Jiheng, open About">
-      <g class="lift obj">
-        <rect class="frame" x="-100" y="-132" width="200" height="264" fill="#fffdf8" stroke="#e7dfcf"/>
-        <image href="assets/me-home.jpg" x="-88" y="-120" width="176" height="220" preserveAspectRatio="xMidYMid slice"/>
-        <text x="0" y="124" text-anchor="middle" font-family="Caveat" font-size="23" fill="#3b342c">hi, that's me</text>
-        <rect x="-40" y="-146" width="80" height="26" fill="#e9dcc0" opacity=".85" transform="rotate(5 0 -133)"/>
-      </g>
-    </a>
-
-    <!-- ===== cartridges ===== -->
-    <a class="cart" href="research.html" data-key="research" transform="translate(196 214) rotate(-10)" aria-label="Research">
-      <g class="lift obj">
-        <use href="#shell"/>
-        <rect class="label-bg" x="-70" y="-64" width="140" height="132" rx="4" fill="#c4573a"/>
-        <text x="-60" y="-46" font-family="JetBrains Mono" font-size="9" fill="#f6e6dc" letter-spacing="1.2">01 / 04</text>
-        <text x="-60" y="-12" font-family="Instrument Serif" font-size="31" fill="#fffaf3">Research</text>
-        <text x="-60" y="6" font-family="JetBrains Mono" font-size="8" fill="#f6e6dc">world models · agents</text>
-        <text x="-60" y="17" font-family="JetBrains Mono" font-size="8" fill="#f6e6dc">· robot perception</text>
-        <g transform="translate(-60 34)" fill="#fffaf3" opacity=".9">
-          <rect x="0" y="12" width="6" height="12"/><rect x="9" y="6" width="6" height="18"/><rect x="18" y="14" width="6" height="10"/><rect x="27" y="0" width="6" height="24"/><rect x="36" y="9" width="6" height="15"/>
-        </g>
-      </g>
-    </a>
-
-    <a class="cart" href="photos.html" data-key="photos" transform="translate(806 222) rotate(9)" aria-label="Photos">
-      <g class="lift obj">
-        <use href="#shell"/>
-        <rect class="label-bg" x="-70" y="-64" width="140" height="132" rx="4" fill="#2f6b6f"/>
-        <text x="-60" y="-46" font-family="JetBrains Mono" font-size="9" fill="#d5e6e3" letter-spacing="1.2">02 / 04</text>
-        <text x="-60" y="-12" font-family="Instrument Serif" font-size="31" fill="#f7fbfa">Photos</text>
-        <text x="-60" y="6" font-family="JetBrains Mono" font-size="8" fill="#d5e6e3">portraits I shot,</text>
-        <text x="-60" y="17" font-family="JetBrains Mono" font-size="8" fill="#d5e6e3">off the clock</text>
-        <g transform="translate(-60 34)" fill="none" stroke="#f7fbfa" stroke-width="1.8" opacity=".9">
-          <rect x="0" y="5" width="34" height="22" rx="3"/><path d="M10 5 L13 0 H21 L24 5"/><circle cx="17" cy="16" r="6"/><circle cx="29" cy="10" r="1" fill="#f7fbfa"/>
-        </g>
-      </g>
-    </a>
-
-    <a class="cart" href="about.html" data-key="about" transform="translate(222 512) rotate(7)" aria-label="About me">
-      <g class="lift obj">
-        <use href="#shell"/>
-        <rect class="label-bg" x="-70" y="-64" width="140" height="132" rx="4" fill="#dca444"/>
-        <text x="-60" y="-46" font-family="JetBrains Mono" font-size="9" fill="#5a3f12" letter-spacing="1.2">03 / 04</text>
-        <text x="-60" y="-12" font-family="Instrument Serif" font-size="31" fill="#2a1f0c">About</text>
-        <text x="-60" y="6" font-family="JetBrains Mono" font-size="8" fill="#5a3f12">who I am, courses,</text>
-        <text x="-60" y="17" font-family="JetBrains Mono" font-size="8" fill="#5a3f12">debate, contact</text>
-        <g transform="translate(-42 46)" fill="#2a1f0c" opacity=".85">
-          <circle r="10" fill="none" stroke="#2a1f0c" stroke-width="2"/><circle cx="-3.5" cy="-2" r="1.6"/><circle cx="3.5" cy="-2" r="1.6"/>
-          <path d="M-4.5 3.5 Q0 7.5 4.5 3.5" fill="none" stroke="#2a1f0c" stroke-width="1.6" stroke-linecap="round"/>
-        </g>
-      </g>
-    </a>
-
-    <a class="cart" href="cv.pdf" data-key="cv" transform="translate(800 520) rotate(-6)" aria-label="CV, PDF">
-      <g class="lift obj">
-        <use href="#shell"/>
-        <rect class="label-bg" x="-70" y="-64" width="140" height="132" rx="4" fill="#5b4a6d"/>
-        <text x="-60" y="-46" font-family="JetBrains Mono" font-size="9" fill="#e2d9ea" letter-spacing="1.2">04 / 04</text>
-        <text x="-60" y="-12" font-family="Instrument Serif" font-size="31" fill="#fbf8fd">CV</text>
-        <text x="-60" y="6" font-family="JetBrains Mono" font-size="8" fill="#e2d9ea">2 pages, PDF</text>
-        <text x="-60" y="17" font-family="JetBrains Mono" font-size="8" fill="#e2d9ea">updated Oct 2026</text>
-        <g transform="translate(-60 32)" fill="none" stroke="#fbf8fd" stroke-width="1.6" opacity=".9">
-          <path d="M0 0 H18 L26 8 V30 H0 Z"/><path d="M18 0 V8 H26"/><line x1="5" y1="15" x2="21" y2="15"/><line x1="5" y1="20" x2="21" y2="20"/><line x1="5" y1="25" x2="15" y2="25"/>
-        </g>
-      </g>
-    </a>
-  </svg>
-
-  <nav class="mobile-list" aria-label="Sections">
-    <a href="research.html"><i class="sw" style="background:#c4573a"></i><div><b>Research</b><span>World models, GUI agents, robot perception</span></div></a>
-    <a href="photos.html"><i class="sw" style="background:#2f6b6f"></i><div><b>Photos</b><span>Portraits I shot, off the clock</span></div></a>
-    <a href="about.html"><i class="sw" style="background:#dca444"></i><div><b>About</b><span>Who I am, courses, contact</span></div></a>
-    <a href="cv.pdf"><i class="sw" style="background:#5b4a6d"></i><div><b>CV</b><span>2 pages, PDF</span></div></a>
-  </nav>
+  <section class="connect">
+    <div class="wrap"><div class="panel">
+      <div>
+        <h2>SAY HELLO<b>.</b></h2>
+        <p class="say">I'm looking for research internships and RA positions in multimodal agents, world models or robot perception. Email is the fastest way to reach me.</p>
+      </div>
+      <div class="channels">
+        <div class="kicker"><i></i>CHANNELS</div>
+        <a href="mailto:ljh20050406@163.com"><span>EMAIL</span><b>ljh20050406@163.com</b></a>
+        <a href="https://github.com/lijiheng972-hub"><span>GITHUB</span><b>lijiheng972-hub</b></a>
+        <a href="cv.pdf"><span>CV</span><b>Download PDF</b></a>
+      </div>
+      <figure class="me">
+        <img src="assets/me-home.jpg" alt="Jiheng Li in a denim shirt in front of a brick wall" width="640" height="800" loading="lazy">
+        <figcaption>hi, that's me</figcaption>
+      </figure>
+    </div></div>
+  </section>
 </main>
+
+<footer>
+  <div class="wrap"><span>© 2026 Jiheng Li</span><span>Wuhan, China</span></div>
+</footer>
 
 <script>
 (() => {
-  const PREVIEW = {
-    research: { count: '5 ENTRIES', lines: ['> GUI agent evaluation', '> robot perception @NCSU', '> gameplay world models', '> LLM hallucination'], cta: 'PRESS A TO LOAD' },
-    photos:   { count: '50 SHOTS', lines: ['> portrait photography', '> mountains, old rooms,', '  stairwells, streets', ''], cta: 'PRESS A TO LOAD' },
-    about:    { count: 'Y3 @HUST', lines: ['> intelligence sci. &', '  technology, GPA 4.28', '> debate team captain', '> contact info'], cta: 'PRESS A TO LOAD' },
-    cv:       { count: 'PDF', lines: ['> 2 pages, English', '> updated Oct 2026', '', ''], cta: 'PRESS A TO OPEN' },
-  };
+  // The name is drawn once into an offscreen canvas; every opaque pixel on a
+  // coarse grid becomes a dot whose colour is sampled from one of my photos.
+  // Dots near the cursor are pushed away and fade, then spring back home.
+  const cvs = document.getElementById('dots');
+  const ctx = cvs.getContext('2d');
+  const PHOTO = 'assets/me.jpg';
+  const PAD = 40;                       // room above/below the letters for scattered dots
+  const R = 90, FORCE = 5, SPRING = .014, DAMP = .86;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const svg = document.querySelector('.scene');
-  const screen = document.getElementById('screen');
-  const carts = [...document.querySelectorAll('.cart')];
-  let current = -1;
+  let W = 0, H = 0, size = 3, P = [], running = false, visible = true;
+  const mouse = { x: -1e4, y: -1e4, on: false };
+  const img = new Image();
 
-  function show(key) {
-    const p = PREVIEW[key];
-    if (!p) { screen.classList.remove('screen-on'); return; }
-    document.getElementById('info-title').textContent = key.toUpperCase();
-    document.getElementById('info-count').textContent = p.count;
-    p.lines.forEach((l, i) => document.getElementById('info-' + (i + 1)).textContent = l);
-    document.getElementById('info-cta').textContent = p.cta;
-    screen.classList.add('screen-on');
+  function build(intro) {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = Math.floor(cvs.clientWidth);
+    const lines = W < 700 ? ["JIHENG'S", 'WORLD.'] : ["JIHENG'S WORLD."];
+
+    const off = document.createElement('canvas');
+    const o = off.getContext('2d');
+    o.font = '800 200px Manrope';
+    const widest = Math.max(...lines.map(l => o.measureText(l).width));
+    const fs = Math.min(230, Math.floor(200 * W * .97 / widest));
+    const lh = fs * .9;
+    const textH = Math.ceil(lh * (lines.length - 1) + fs * .78);
+    H = textH + PAD * 2;
+
+    cvs.width = W * dpr; cvs.height = H * dpr; cvs.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    off.width = W; off.height = H;
+    o.font = `800 ${fs}px Manrope`;
+    o.textAlign = 'center'; o.textBaseline = 'alphabetic'; o.fillStyle = '#000';
+    lines.forEach((l, i) => o.fillText(l, W / 2, PAD + fs * .74 + i * lh));
+    const mask = o.getImageData(0, 0, W, H).data;
+
+    // colour source: the photo, cover-fitted to the canvas
+    const c2 = document.createElement('canvas'); c2.width = W; c2.height = H;
+    const g = c2.getContext('2d');
+    const s = Math.max(W / img.width, H / img.height);
+    g.drawImage(img, (W - img.width * s) / 2, (H - img.height * s) / 2, img.width * s, img.height * s);
+    const col = g.getImageData(0, 0, W, H).data;
+
+    const gap = W < 700 ? 3 : 4;
+    size = gap * .84;
+    P = [];
+    for (let y = 0; y < H; y += gap) {
+      for (let x = 0; x < W; x += gap) {
+        const k = (y * W + x) * 4;
+        if (mask[k + 3] < 128) continue;
+        let r = col[k], gg = col[k + 1], b = col[k + 2];
+        const L = (.2126 * r + .7152 * gg + .0722 * b) / 255;
+        if (L > .6) { const f = .6 / L; r *= f; gg *= f; b *= f; }   // keep pale areas readable on the background
+        r = r * .85 + 140 * .15; gg = gg * .85 + 136 * .15; b = b * .85 + 130 * .15; // nudge toward the grey palette
+        P.push({
+          ox: x, oy: y,
+          x: intro ? Math.random() * W : x, y: intro ? Math.random() * H : y,
+          vx: 0, vy: 0, c: `rgb(${r | 0},${gg | 0},${b | 0})`,
+        });
+      }
+    }
   }
 
-  carts.forEach((c, i) => {
-    c.addEventListener('mouseenter', () => { select(i, false); });
-    c.addEventListener('mouseleave', () => { select(-1, false); });
-    c.addEventListener('focus', () => select(i, false));
-    c.addEventListener('blur', () => select(-1, false));
-    c.addEventListener('click', e => { e.preventDefault(); load(i); });
-  });
-
-  function select(i, focus) {
-    current = i;
-    carts.forEach((c, j) => c.classList.toggle('active', j === i));
-    show(i >= 0 ? carts[i].dataset.key : null);
-    if (focus && i >= 0) carts[i].focus({ preventScroll: true });
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    for (const p of P) {
+      const d = Math.abs(p.x - p.ox) + Math.abs(p.y - p.oy);
+      ctx.globalAlpha = d > 2 ? Math.max(.08, 1 - d / 110) : 1;
+      ctx.fillStyle = p.c;
+      ctx.beginPath();
+      ctx.arc(p.x + size / 2, p.y + size / 2, size / 2, 0, 6.2832);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
   }
 
-  // slide the cartridge toward the console slot, then follow the link
-  function load(i) {
-    const c = carts[i];
-    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduce) { location.href = c.getAttribute('href'); return; }
-    const box = c.getBBox();
-    const m = c.getCTM(), s = svg.getScreenCTM();
-    const local = svg.createSVGPoint(); local.x = box.x + box.width / 2; local.y = box.y + box.height / 2;
-    const p = local.matrixTransform(s.inverse().multiply(m));
-    const dx = 500 - p.x, dy = 110 - p.y;
-    c.classList.add('inserting');
-    c.querySelector('.lift').style.transform = `translate(${dx * .35}px, ${dy * .35}px) scale(.9)`;
-    c.querySelector('.lift').style.opacity = '.6';
-    setTimeout(() => location.href = c.getAttribute('href'), 320);
+  function step() {
+    let moving = false;
+    const R2 = R * R;
+    for (const p of P) {
+      if (mouse.on) {
+        const dx = p.x - mouse.x, dy = p.y - mouse.y, d2 = dx * dx + dy * dy;
+        if (d2 < R2) {
+          const d = Math.sqrt(d2) || 1, f = (1 - d / R) * FORCE;
+          p.vx += dx / d * f + (Math.random() - .5) * f * .6;
+          p.vy += dy / d * f + (Math.random() - .5) * f * .6;
+        }
+      }
+      p.vx = (p.vx + (p.ox - p.x) * SPRING) * DAMP;
+      p.vy = (p.vy + (p.oy - p.y) * SPRING) * DAMP;
+      p.x += p.vx; p.y += p.vy;
+      if (!moving && (Math.abs(p.vx) + Math.abs(p.vy) > .02 || Math.abs(p.x - p.ox) + Math.abs(p.y - p.oy) > .3)) moving = true;
+    }
+    draw();
+    return moving;
   }
-
-  const snap = document.querySelector('.snap');
-  snap.addEventListener('mouseenter', () => show('about'));
-  snap.addEventListener('mouseleave', () => show(null));
-  snap.addEventListener('focus', () => show('about'));
-  snap.addEventListener('blur', () => show(null));
-
-  addEventListener('keydown', e => {
-    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { select((current + 1) % carts.length, true); e.preventDefault(); }
-    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { select((current - 1 + carts.length) % carts.length, true); e.preventDefault(); }
-    else if (e.key === 'Enter' && current >= 0) { load(current); }
-  });
-
-  /* ---- the little world on the screen: a pixel dog you can steer ---- */
-  const SPRITE = [
-    ['......##', '#....###', '#######.', '.######.', '.#.#..#.'],
-    ['......##', '#....###', '#######.', '.######.', '#.#..#.#'],
-  ];
-  const PX = 3, GROUND = -62;
-  const dog = document.getElementById('dog');
-  const frames = SPRITE.map(rows => {
-    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-    rows.forEach((r, y) => [...r].forEach((ch, x) => {
-      if (ch !== '#') return;
-      const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-      rect.setAttribute('x', x * PX); rect.setAttribute('y', y * PX - rows.length * PX);
-      rect.setAttribute('width', PX); rect.setAttribute('height', PX);
-      g.appendChild(rect);
-    }));
-    dog.appendChild(g);
-    return g;
-  });
-
-  let x = -60, dir = 1, vy = 0, y = 0, t = 0;
-  const readout = document.getElementById('action-readout');
-  const frameNo = document.getElementById('frame-no');
-  let lastAct = '▶';
-
-  function act(a) {
-    if (a === 'left') { dir = -1; lastAct = '◀'; }
-    if (a === 'right') { dir = 1; lastAct = '▶'; }
-    if (a === 'a' && y === 0) { vy = -5.5; lastAct = 'A'; }
-    if (a === 'b') { dir = 0; lastAct = 'B'; }
-    if (a === 'up' && y === 0) { vy = -5.5; lastAct = '▲'; }
-    readout.textContent = 'a=' + lastAct;
-  }
-  document.querySelectorAll('[data-act]').forEach(el =>
-    el.addEventListener('click', () => {
-      if (el.dataset.act === 'a' && current >= 0) return load(current);
-      screen.classList.remove('screen-on');
-      act(el.dataset.act);
-    }));
 
   function tick() {
-    t++;
-    x += dir * 0.9;
-    if (x > 70) dir = -1;
-    if (x < -88) dir = 1;
-    vy += 0.45; y = Math.min(0, y + vy); if (y === 0) vy = 0;
-    const f = (dir !== 0 && Math.floor(t / 8) % 2) ? 1 : 0;
-    frames[0].style.display = f ? 'none' : '';
-    frames[1].style.display = f ? '' : 'none';
-    const flip = dir < 0 ? `translate(${24},0) scale(-1,1)` : '';
-    dog.setAttribute('transform', `translate(${x.toFixed(1)} ${(GROUND + y).toFixed(1)}) ${flip}`);
-    if (t % 4 === 0) frameNo.textContent = 't=' + String(Math.floor(t / 4) % 10000).padStart(4, '0');
-    requestAnimationFrame(tick);
+    if ((step() || mouse.on) && visible) requestAnimationFrame(tick);
+    else running = false;
   }
-  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) requestAnimationFrame(tick);
-  else dog.setAttribute('transform', `translate(-20 ${GROUND})`);
+
+  function wake() { if (!running && !reduce) { running = true; requestAnimationFrame(tick); } }
+
+  function point(e) {
+    const r = cvs.getBoundingClientRect();
+    const t = e.touches ? e.touches[0] : e;
+    mouse.x = t.clientX - r.left; mouse.y = t.clientY - r.top;
+    mouse.on = mouse.x > -R && mouse.x < W + R && mouse.y > -R && mouse.y < H + R;
+    if (mouse.on) wake();
+  }
+  addEventListener('mousemove', point, { passive: true });
+  cvs.addEventListener('touchmove', point, { passive: true });
+  cvs.addEventListener('touchend', () => { mouse.on = false; });
+  document.addEventListener('mouseleave', () => { mouse.on = false; });
+
+  new IntersectionObserver(([e]) => { visible = e.isIntersecting; if (visible) wake(); }).observe(cvs);
+
+  let rt;
+  addEventListener('resize', () => {
+    clearTimeout(rt);
+    rt = setTimeout(() => { const w = Math.floor(cvs.clientWidth); if (w !== W) { build(false); draw(); } }, 150);
+  });
+
+  img.onload = () => document.fonts.load('800 100px Manrope').then(() => {
+    build(!reduce);
+    draw();
+    wake();
+  });
+  img.src = PHOTO;
 })();
 </script>
 </body>

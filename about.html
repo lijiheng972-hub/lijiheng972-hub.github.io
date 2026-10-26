@@ -6,65 +6,46 @@
 <title>About · Jiheng Li</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@500&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500&text=李继亨&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@500&text=李继亨&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css?v=2">
 <style>
   .about { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 56px; align-items: start; }
-  .side { position: sticky; top: 32px; }
-  .side h1 { font-family: var(--serif); font-weight: 400; font-size: 3.4rem; line-height: 1; letter-spacing: -1px; }
-  .side .cn { font-family: 'Noto Serif SC', serif; color: var(--muted); letter-spacing: 4px; margin: 8px 0 22px; }
+  .side { position: sticky; top: 84px; }
+  .side h1 { font-weight: 800; font-size: 3rem; line-height: 1; letter-spacing: -1.5px; }
+  .side .cn { font-family: 'Noto Sans SC', sans-serif; color: var(--muted); letter-spacing: 4px; margin: 10px 0 22px; }
 
-  .polaroid {
-    background: #fff; padding: 12px 12px 44px; width: 240px;
-    box-shadow: 0 14px 34px -16px rgba(58,47,34,.45);
-    transform: rotate(-3deg); position: relative;
-  }
-  .polaroid .ph {
-    aspect-ratio: 1; background: #e6dfd2;
-    display: grid; place-items: center; text-align: center;
-    font-family: var(--mono); font-size: .7rem; color: var(--muted); padding: 16px;
-  }
-  .polaroid img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; display: block; }
-  .polaroid .cap { position: absolute; left: 0; right: 0; bottom: 10px; text-align: center; font-family: 'Caveat', cursive; font-size: 1.3rem; color: var(--ink-2); }
-  .polaroid::before {
-    content: ''; position: absolute; top: -12px; left: 50%; width: 90px; height: 24px;
-    transform: translateX(-50%) rotate(4deg); background: rgba(220,164,68,.55);
-  }
+  .polaroid { width: 250px; margin: 0; }
+  .polaroid img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; display: block; border-radius: 24px; }
+  .polaroid .cap { font-family: var(--mono); font-size: .72rem; color: var(--muted); padding: 10px 6px 0; }
 
-  dl.facts { margin-top: 32px; display: grid; gap: 12px; }
-  dl.facts div { display: grid; grid-template-columns: 70px 1fr; gap: 10px; font-size: .86rem; }
-  dl.facts dt { font-family: var(--mono); font-size: .7rem; color: var(--muted); text-transform: uppercase; letter-spacing: .8px; padding-top: 2px; }
-  dl.facts dd { color: var(--ink-2); line-height: 1.5; }
+  dl.facts { margin-top: 28px; display: grid; gap: 6px; }
+  dl.facts div { display: grid; grid-template-columns: 70px 1fr; gap: 10px; font-size: .86rem; padding: 9px 14px; background: var(--card); border-radius: 14px; }
+  dl.facts dt { font-family: var(--mono); font-size: .7rem; color: var(--muted); text-transform: uppercase; letter-spacing: .6px; padding-top: 2px; }
+  dl.facts dd { color: var(--ink-2); line-height: 1.5; font-weight: 500; }
   dl.facts a { text-decoration: none; border-bottom: 1px solid var(--line); }
   dl.facts a:hover { border-color: var(--ink); }
 
-  .prose h2 { font-family: var(--serif); font-weight: 400; font-size: 2rem; margin: 44px 0 14px; }
+  .prose h2 { font-weight: 800; font-size: 1.8rem; letter-spacing: -.8px; margin: 48px 0 16px; }
   .prose h2:first-child { margin-top: 0; }
-  .prose p { line-height: 1.75; color: var(--ink-2); margin-bottom: 14px; max-width: 62ch; }
+  .prose p { line-height: 1.8; color: var(--ink-2); margin-bottom: 14px; max-width: 62ch; font-weight: 500; }
 
   .grades { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; }
-  .grade { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
-  .grade span { font-size: .86rem; color: var(--ink-2); }
-  .grade b { font-family: var(--mono); font-weight: 500; }
+  .grade { background: var(--card); border-radius: 16px; padding: 14px 16px; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .grade span { font-size: .86rem; color: var(--ink-2); font-weight: 500; }
+  .grade b { font-family: var(--mono); font-weight: 500; color: var(--sage); }
 
   .misc { display: grid; gap: 12px; }
-  .misc > div { border-left: 3px solid var(--c); padding: 4px 0 4px 14px; }
-  .misc > div.pic { display: grid; grid-template-columns: minmax(0, 1fr) 190px; gap: 24px; align-items: center; padding: 10px 0 18px 14px; }
-  .snap {
-    margin: 0; background: #fff; padding: 7px 7px 30px; position: relative;
-    box-shadow: 0 12px 26px -16px rgba(58,47,34,.5);
-    transform: rotate(var(--r, 2deg));
-  }
-  .snap img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; display: block; }
-  .snap figcaption { position: absolute; left: 0; right: 0; bottom: 4px; text-align: center; font-family: 'Caveat', cursive; font-size: 1.1rem; color: var(--ink-2); }
-  .snap::before {
-    content: ''; position: absolute; top: -9px; left: 50%; width: 64px; height: 18px;
-    transform: translateX(-50%) rotate(-3deg); background: rgba(220,164,68,.5);
-  }
-  .misc b { font-weight: 600; font-size: .95rem; }
-  .misc span { display: block; font-size: .78rem; font-family: var(--mono); color: var(--muted); margin: 2px 0 4px; }
+  .misc > div { background: var(--card); border-radius: 22px; padding: 18px 22px; position: relative; }
+  .misc > div::before { content: ''; position: absolute; left: 0; top: 22px; bottom: 22px; width: 4px; border-radius: 0 4px 4px 0; background: var(--c); }
+  .misc > div.pic { display: grid; grid-template-columns: minmax(0, 1fr) 170px; gap: 24px; align-items: center; }
+  .snap { margin: 0; }
+  .snap img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; display: block; border-radius: 18px; }
+  .snap figcaption { font-family: var(--mono); font-size: .68rem; color: var(--muted); padding: 8px 4px 0; text-align: center; }
+  .misc b { font-weight: 700; font-size: .98rem; }
+  .misc span { display: block; font-size: .76rem; font-family: var(--mono); color: var(--muted); margin: 2px 0 6px; }
   .misc p { margin: 0; font-size: .92rem; }
+  .misc a { text-decoration-color: var(--line); }
 
   @media (max-width: 800px) {
     .about { grid-template-columns: 1fr; gap: 40px; }
@@ -72,14 +53,14 @@
   }
   @media (max-width: 520px) {
     .misc > div.pic { grid-template-columns: 1fr; }
-    .misc > div.pic .snap { width: 200px; }
+    .misc > div.pic .snap { width: 190px; }
   }
 </style>
 </head>
 <body>
 <div class="page">
   <header class="topbar">
-    <a class="back" href="index.html">← Back to the console</a>
+    <a class="back" href="index.html">← Home</a>
     <nav>
       <a href="research.html">Research</a>
       <a href="photos.html">Photos</a>
@@ -90,14 +71,14 @@
 
   <div class="about">
     <aside class="side">
-      <div class="kicker">Cartridge 03 · About</div>
+      <div class="kicker">03 · About</div>
       <h1 style="margin-top:10px">Jiheng Li</h1>
       <div class="cn">李继亨</div>
 
-      <div class="polaroid">
+      <figure class="polaroid">
         <img src="assets/me.jpg" alt="Jiheng Li sitting on a stool on a tree-lined street at night" width="900" height="1125">
-        <div class="cap">photo by ONETWO</div>
-      </div>
+        <figcaption class="cap">photo by ONETWO</figcaption>
+      </figure>
 
       <dl class="facts">
         <div><dt>Now</dt><dd>Year 3 undergraduate, class of 2028</dd></div>
@@ -127,16 +108,16 @@
 
       <h2>Outside the lab</h2>
       <div class="misc">
-        <div class="pic" style="--c:#c4573a">
+        <div class="pic" style="--c:var(--rose)">
           <div><b>Debate team captain</b><span>School of CS · 2024 — now</span><p>I run practice and coach teammates on argument structure. Two of them won Best Debater at inter-school tournaments during my term.</p></div>
-          <figure class="snap" style="--r:2.5deg"><img src="assets/life-debate.jpg" alt="Jiheng at a debate, seated behind a third-speaker placard" width="720" height="900" loading="lazy"><figcaption>third speaker</figcaption></figure>
+          <figure class="snap"><img src="assets/life-debate.jpg" alt="Jiheng at a debate, seated behind a third-speaker placard" width="720" height="900" loading="lazy"><figcaption>third speaker</figcaption></figure>
         </div>
-        <div style="--c:#2f6b6f"><b>Student union, HR &amp; liaison</b><span>School of CS · 2024 — now</span><p>Run recruitment and day-to-day operations for my group; chaired several school-wide union assemblies.</p></div>
-        <div class="pic" style="--c:#5b4a6d">
+        <div style="--c:var(--sage)"><b>Student union, HR &amp; liaison</b><span>School of CS · 2024 — now</span><p>Run recruitment and day-to-day operations for my group; chaired several school-wide union assemblies.</p></div>
+        <div class="pic" style="--c:var(--mauve)">
           <div><b>Portrait photography</b><span>behind the camera</span><p>When I'm not running experiments I'm usually out shooting portraits: mountains, old rooms, stairwells, streets. A few I still like are on the <a href="photos.html">Photos</a> page.</p></div>
-          <figure class="snap" style="--r:-2deg"><img src="assets/life-shooting.jpg" alt="Jiheng shooting with a camera, leaning on a lamp post by the water" width="1320" height="735" loading="lazy" style="object-position: 52% center"><figcaption>on the other side</figcaption></figure>
+          <figure class="snap"><img src="assets/life-shooting.jpg" alt="Jiheng shooting with a camera, leaning on a lamp post by the water" width="1320" height="735" loading="lazy" style="object-position: 52% center"><figcaption>on the other side</figcaption></figure>
         </div>
-        <div style="--c:#dca444"><b>Honors &amp; languages</b><span>&nbsp;</span><p>Outstanding Student Cadre, Freshman Scholarship. CET-6 616. Python, C/C++.</p></div>
+        <div style="--c:var(--sand)"><b>Honors &amp; languages</b><span>&nbsp;</span><p>Outstanding Student Cadre, Freshman Scholarship. CET-6 616. Python, C/C++.</p></div>
       </div>
     </div>
   </div>
