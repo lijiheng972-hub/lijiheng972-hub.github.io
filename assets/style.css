@@ -131,3 +131,12 @@ a { color: inherit; }
   .entry .spine { flex-direction: row; flex-wrap: wrap; gap: 4px 14px; padding: 12px 18px; }
   .entry .body { padding: 18px 18px; }
 }
+
+/* Published research resources */
+#wanderbench { scroll-margin-top: 90px; }
+.paper-links { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 18px; }
+.paper-links a { border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; font-size: .84rem; font-weight: 600; text-decoration: none; }
+.paper-links a:first-child { background: var(--ink); color: var(--card); }
+.paper-links a:hover { background: var(--paper); color: var(--ink); }
+.paper-links a:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.paper-links > span { font-family: var(--mono); font-size: .7rem; color: var(--ink-2); }

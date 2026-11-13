@@ -4,10 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Research · Jiheng Li</title>
+<meta name="description" content="Research by Jiheng Li: WanderBench and WanderLand, video world models, GUI agents, and robot perception.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css?v=2">
+<link rel="stylesheet" href="assets/style.css?v=3">
 </head>
 <body>
 <div class="page">
@@ -24,10 +25,44 @@
   <div class="page-head">
     <div class="kicker">01 · Research</div>
     <h1>Research <em>log</em></h1>
-    <p>What I worked on in 2026. Each entry shows the short version; click "details" for what I actually built. Numbers are from my own runs.</p>
+    <p>Selected research and ongoing projects. Open each entry for details; results for published work are reported in the linked paper.</p>
   </div>
 
   <div class="entries">
+
+    <article class="entry" id="wanderbench" style="--c:var(--blue)">
+      <div class="spine">
+        <span class="when">11.2026 · preprint</span>
+        <span class="tag">World models</span>
+        <span class="tag">Benchmark + method</span>
+      </div>
+      <div class="body">
+        <h2>WanderBench: Can World Models Explore Dynamic Worlds from Video?</h2>
+        <div class="role">Co-first author · Core project contributor</div>
+        <p class="q">Can a world model explore a recorded scene from new viewpoints while staying faithful to what actually happened?</p>
+        <p class="sum">As a co-first author and a driving contributor to this project, I helped advance the research from evaluating video-conditioned world exploration to improving it. Our work introduces WanderBench, a benchmark for source-faithful exploration, and WanderLand, a training-free framework that preserves source dynamics and improves consistency when revisiting a scene.</p>
+        <div class="nums">
+          <div class="num"><b>745</b><span>source videos across 3 difficulty tiers</span></div>
+          <div class="num"><b>6 dimensions · 24 metrics</b><span>evaluation validated against human judgments</span></div>
+          <div class="num"><b>+8.3 points</b><span>largest gain in source-dynamics fidelity</span></div>
+        </div>
+        <div class="paper-links" aria-label="Paper resources">
+          <a href="https://arxiv.org/abs/2611.12557">Read paper ↗</a>
+          <a href="https://arxiv.org/pdf/2611.12557">PDF ↗</a>
+          <span>arXiv · November 2026</span>
+        </div>
+        <details>
+          <summary>Research details</summary>
+          <ul>
+            <li>WanderBench pairs real and AI-generated source videos with keyboard-controlled camera routes, including random exploration and out-and-back revisits. It tests identity, event progression, and consistency alongside visual quality and camera control.</li>
+            <li>Evaluation of eight models exposes two shared weaknesses: camera control and source dynamics deteriorate over longer rollouts, and revisited places change appearance.</li>
+            <li>WanderLand anchors each frame to the source at the same instant and reuses previously generated static content on revisits, without updating model parameters.</li>
+            <li>Across five models, WanderLand improves all six evaluation dimensions, with gains of up to 8.3 points in source-dynamics fidelity and 4.8 points in dynamic revisit consistency.</li>
+          </ul>
+        </details>
+        <div class="chips"><span>Video world models</span><span>Benchmark design</span><span>Training-free inference</span><span>Spatiotemporal consistency</span></div>
+      </div>
+    </article>
 
     <article class="entry" style="--c:var(--blue)">
       <div class="spine">
